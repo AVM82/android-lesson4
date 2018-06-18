@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Lesson4</string>
+    <string name="add">Add</string>
+    <string name="remove">remove</string>
+    <string name="alarm_clock_set_on">Alarm clock set on</string>
+    <string name="edit">EDIT</string>
+    <string name="delete">DELETE</string>
+</resources>
