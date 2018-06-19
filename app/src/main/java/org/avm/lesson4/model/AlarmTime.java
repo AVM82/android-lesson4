@@ -63,7 +63,7 @@ public class AlarmTime extends BroadcastReceiver implements Alarm {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
         Intent intent = new Intent(context, getClass());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-                getId(), intent, 0);
+                getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         if (alarmManager != null) {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
                     alarmTime.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);

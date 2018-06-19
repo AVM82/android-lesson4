@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.avm.lesson4.model.Alarm;
 import org.avm.lesson4.model.db.SQLiteDB;
@@ -25,7 +26,8 @@ public class SetAlarmsService extends IntentService {
         List<Alarm> alarms = db.selectAllAlarms();
         for (Alarm alarm : alarms) {
             alarm.scheduleAlarms(this);
+            Log.d(AFTER_REBOOT, "I ran!");
+            Toast.makeText(this, "I ran", Toast.LENGTH_SHORT).show();
         }
-        Log.d(AFTER_REBOOT, "I ran!");
     }
 }

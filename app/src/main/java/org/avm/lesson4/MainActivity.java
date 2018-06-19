@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -53,17 +54,15 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @OnItemLongClick(R.id.list_view)
-    boolean longClickOnAlarm() {
+    boolean longClickOnAlarm(AdapterView<?> parent, View view, int position, long id) {
         Log.d(TAG, "Click");
         View sheetView = getLayoutInflater().inflate(R.layout.bottom_sheet, null);
         mBottomSheetDialog.setContentView(sheetView);
         LinearLayout bottomDelete = sheetView.findViewById(R.id.bottom_sheet_delete);
         bottomDelete.setOnClickListener(v -> {
             Log.d(TAG, "Click delete alarm");
-            if (listView != null) {
-                TextView id = listView.findViewById(R.id.id);
-                mainPresenter.deleteAlarm(id.getText().toString());
-            }
+                TextView idAlarm = view.findViewById(R.id.id);
+                mainPresenter.deleteAlarm(idAlarm.getText().toString());
             mBottomSheetDialog.dismiss();
         });
         mBottomSheetDialog.show();
