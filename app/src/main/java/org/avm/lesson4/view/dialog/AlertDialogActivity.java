@@ -1,6 +1,5 @@
 package org.avm.lesson4.view.dialog;
 
-import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;

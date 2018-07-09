@@ -1,9 +1,9 @@
 package org.avm.lesson4.view;
 
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,11 +12,9 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.avm.lesson4.R;
 import org.avm.lesson4.databinding.ActivityMainBinding;
-import org.avm.lesson4.databinding.ListviewItemBinding;
 import org.avm.lesson4.model.Alarm;
 import org.avm.lesson4.presenter.MainPresenter;
 import org.avm.lesson4.presenter.MainPresenterImpl;
@@ -34,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainPresenter = new MainPresenterImpl(this);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);

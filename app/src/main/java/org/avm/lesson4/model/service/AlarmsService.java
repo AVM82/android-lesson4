@@ -12,10 +12,9 @@ import java.util.Calendar;
 
 import timber.log.Timber;
 
-import static android.app.PendingIntent.FLAG_IMMUTABLE;
 import static android.content.Context.ALARM_SERVICE;
 
-public class AlarmsService  {
+public class AlarmsService {
     private Context context;
 
     public AlarmsService(Context context) {
@@ -46,7 +45,7 @@ public class AlarmsService  {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(alarm.getTimeAlarmInMillis());
 
-        if(calendar.before(Calendar.getInstance())) {
+        if (calendar.before(Calendar.getInstance())) {
             calendar.add(Calendar.DATE, 1);
         }
         return calendar;

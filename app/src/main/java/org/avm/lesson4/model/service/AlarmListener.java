@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import org.avm.lesson4.model.Alarm;
 import org.avm.lesson4.view.dialog.AlertDialogActivity;
 
 import java.util.Calendar;
