@@ -30,7 +30,7 @@ public class AlarmsService  {
         Calendar calendar = checkAlarmTime(alarm);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-                alarm.getAlarmId(), intent, FLAG_IMMUTABLE);
+                alarm.getAlarmId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         if (alarmManager != null) {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
                     calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
@@ -57,7 +57,7 @@ public class AlarmsService  {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, AlarmListener.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
-                context, alarmId, intent, FLAG_IMMUTABLE);
+                context, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);
     }
 }
