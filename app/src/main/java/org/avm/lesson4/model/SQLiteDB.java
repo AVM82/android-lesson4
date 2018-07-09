@@ -1,4 +1,4 @@
-package org.avm.lesson4.model.db;
+package org.avm.lesson4.model;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,18 +6,18 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import org.avm.lesson4.model.Alarm;
-import org.avm.lesson4.model.AlarmTime;
-
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Timer;
+
+import timber.log.Timber;
 
 public class SQLiteDB extends SQLiteOpenHelper implements DataBaseManager {
     private static final String DATABASE_NAME = "alarms.db";
     private static final int DATABASE_VERSION = 1;
     private static final String TABLE_NAME = "alarms";
-    private static final String HOUR_COLUMN = "hour";
-    private static final String MINUTE_COLUMN = "minute";
+    private static final String ALARM_TIME = "alarm_time";
     private static final String ID = "id";
 
     private SQLiteDatabase db;
@@ -27,23 +27,8 @@ public class SQLiteDB extends SQLiteOpenHelper implements DataBaseManager {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_NAME + " (" + ID + " INTEGER primary key autoincrement, " +
-                HOUR_COLUMN + " INTEGER, " +
-                MINUTE_COLUMN + " INTEGER)");
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-    }
-
-    private void connect() {
-        db = getWritableDatabase();
-    }
-
-    @Override
     public List<Alarm> selectAllAlarms() {
+        Timber.d("select all from DB");
         connect();
         List<Alarm> alarms = new ArrayList<>();
         Cursor cursor = db.query(TABLE_NAME,
@@ -54,34 +39,51 @@ public class SQLiteDB extends SQLiteOpenHelper implements DataBaseManager {
                 null,
                 null);
         int idColumnIndex = cursor.getColumnIndex(ID);
-        int hourColumnIndex = cursor.getColumnIndex(HOUR_COLUMN);
-        int minuteColumnIndex = cursor.getColumnIndex(MINUTE_COLUMN);
+        int hourColumnIndex = cursor.getColumnIndex(ALARM_TIME);
         while (cursor.moveToNext()) {
-            Alarm alarm = new AlarmTime(cursor.getInt(hourColumnIndex),
-                    cursor.getInt(minuteColumnIndex));
-            alarm.setId(cursor.getInt(idColumnIndex));
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(cursor.getLong(hourColumnIndex));
+            Alarm alarm = new Alarm(calendar);
+            alarm.setAlarmId(cursor.getInt(idColumnIndex));
             alarms.add(alarm);
         }
+        cursor.close();
         close();
         return alarms;
     }
 
     @Override
-    public void addAlarms(Alarm alarm) {
+    public void saveAlarms(Alarm alarm) {
+        Timber.d("saveAlarms %s", alarm.getAlarmTime());
         connect();
-        String[] alarmSet = alarm.getAlarmSet().split(":");
         ContentValues contentValues = new ContentValues();
-        contentValues.put(HOUR_COLUMN, alarmSet[0]);
-        contentValues.put(MINUTE_COLUMN, alarmSet[1]);
+        contentValues.put(ALARM_TIME, alarm.getTimeAlarmInMillis());
         int id = (int) db.insert(TABLE_NAME, null, contentValues);
-        alarm.setId(id);
+        alarm.setAlarmId(id);
         close();
     }
 
     @Override
-    public void deleteAlarm(String id) {
+    public void deleteAlarm(int id) {
+        Timber.d("delete Alarms with id %s", id);
         connect();
         db.delete(TABLE_NAME, ID + " = " + id, null);
         close();
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE " + TABLE_NAME + " (" + ID + " INTEGER primary key autoincrement, " +
+                ALARM_TIME + " INTEGER)");
+
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    }
+
+    private void connect() {
+        db = getWritableDatabase();
     }
 }

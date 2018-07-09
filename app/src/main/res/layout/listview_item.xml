@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+<layout>
+<data>
+    <variable
+        name="alarm"
+        type="org.avm.lesson4.model.Alarm">
+    </variable>
+</data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/id"
-        android:visibility="gone"
-        android:layout_height="0dp"
-        android:layout_width="0dp" />
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:paddingStart="5dp"
-        android:layout_weight="0.4"
-        android:text="@string/alarm_clock_set_on"
-        android:textSize="15sp" />
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="0.4"
-        android:textSize="15sp" />
+        <TextView
+            android:id="@+id/alarm_id"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            android:text="@{String.valueOf(alarm.alarmId)}"
+            />
 
-    <CheckBox
-        android:id="@+id/alarm_on"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="0.1"
-        android:checked="true"
-        android:focusable="false"
-        android:focusableInTouchMode="false" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.4"
+            android:paddingStart="5dp"
+            android:text="@string/alarm_clock_set_on"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.4"
+            android:text="@{alarm.alarmTime}"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+</layout>

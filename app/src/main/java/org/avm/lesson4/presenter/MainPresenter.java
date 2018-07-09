@@ -2,12 +2,17 @@ package org.avm.lesson4.presenter;
 
 import org.avm.lesson4.model.Alarm;
 
+import java.util.Calendar;
+import java.util.List;
+
 public interface MainPresenter {
-    Alarm createAlarm(int hour, int minute);
+    String getAlarmSet(Calendar calendar);
 
-    void setAlarm(Alarm alarm);
+    void saveAlarmToDb(Alarm alarm);
 
-    void getAlarms();
+    List<Alarm> getAllAlarmsFromDb();
 
-    void deleteAlarm(String id);
+    void deleteAlarm(int id);
+
+    void scheduleAlarms(Alarm alarm);
 }

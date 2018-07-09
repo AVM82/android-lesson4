@@ -22,7 +22,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/ic_remove_circle_black_24dp"
+            app:srcCompat="@drawable/ic_remove_circle_24dp"
             tools:ignore="VectorDrawableCompat" />
 
         <TextView
@@ -30,6 +30,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="16dp"
-            android:text="@string/delete" />
+            android:text="@string/delete_alarm" />
     </LinearLayout>
 </LinearLayout>
