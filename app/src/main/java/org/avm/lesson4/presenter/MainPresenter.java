@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.List;
 
 public interface MainPresenter {
-    String getAlarmSet(Calendar calendar);
 
     void saveAlarmToDb(Alarm alarm);
 

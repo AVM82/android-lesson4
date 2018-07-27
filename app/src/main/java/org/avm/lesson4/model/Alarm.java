@@ -4,9 +4,10 @@ import java.util.Calendar;
 
 public class Alarm {
 
-    private long timeAlarmInMillis;
+    private final long timeAlarmInMillis;
+    private final String alarmTime;
+
     private int alarmId;
-    private String alarmTime;
 
 
     public Alarm(Calendar calendar) {

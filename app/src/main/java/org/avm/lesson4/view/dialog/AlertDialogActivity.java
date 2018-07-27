@@ -10,30 +10,33 @@ import org.avm.lesson4.R;
 import timber.log.Timber;
 
 public class AlertDialogActivity extends AppCompatActivity {
+
     private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        runMediaPlayer();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Alarm")
-                .setMessage("STOP PLAY.")
-                .setCancelable(false)
-                .setNegativeButton("OK", (dialog, id) -> {
-                    mediaPlayer.stop();
-                    dialog.cancel();
-                    finish();
-                });
-        AlertDialog alert = builder.create();
-        alert.show();
+
+        try {
+            runMediaPlayer();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Alarm")
+                    .setMessage("STOP PLAY.")
+                    .setCancelable(false)
+                    .setNegativeButton("OK", (dialog, id) -> {
+                        mediaPlayer.stop();
+                        dialog.cancel();
+                        finish();
+                    });
+            builder.create().show();
+        } catch (IllegalArgumentException e) {
+            Timber.d(e);
+        }
     }
 
-    private void runMediaPlayer() {
+    private void runMediaPlayer() throws IllegalArgumentException {
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.rock);
-        if (mediaPlayer == null) {
-            Timber.d("Create() on MediaPlayer failed.");
-        } else {
+        if (mediaPlayer != null) {
             mediaPlayer.setOnCompletionListener(player -> {
                 Timber.d("stop sound");
                 player.stop();
@@ -41,6 +44,8 @@ public class AlertDialogActivity extends AppCompatActivity {
             });
             Timber.d("Play sound");
             mediaPlayer.start();
+        } else {
+            throw new IllegalArgumentException("Create() on MediaPlayer failed. because of it's reference is null");
         }
     }
 }

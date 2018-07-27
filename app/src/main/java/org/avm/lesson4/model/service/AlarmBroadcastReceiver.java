@@ -11,7 +11,7 @@ import java.util.Calendar;
 
 import timber.log.Timber;
 
-public class AlarmListener extends BroadcastReceiver {
+public class AlarmBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {

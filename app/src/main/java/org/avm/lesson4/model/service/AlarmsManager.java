@@ -14,19 +14,14 @@ import timber.log.Timber;
 
 import static android.content.Context.ALARM_SERVICE;
 
-public class AlarmsService {
-    private Context context;
+public class AlarmsManager {
 
-    public AlarmsService(Context context) {
-        this.context = context;
-    }
-
-    public void scheduleAlarm(Alarm alarm) {
+    public static void scheduleAlarm(Alarm alarm, Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        Intent intent = new Intent(context, AlarmListener.class);
+        Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
         intent.putExtra("time", alarm.getAlarmTime());
 
-        Calendar calendar = checkAlarmTime(alarm);
+        Calendar calendar = getAlarmCalendar(alarm);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
                 alarm.getAlarmId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -41,7 +36,7 @@ public class AlarmsService {
     }
 
     @NonNull
-    private Calendar checkAlarmTime(Alarm alarm) {
+    private static Calendar getAlarmCalendar(Alarm alarm) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(alarm.getTimeAlarmInMillis());
 
@@ -51,10 +46,10 @@ public class AlarmsService {
         return calendar;
     }
 
-    public void unscheduleAlarm(int alarmId) {
+    public static void unscheduleAlarm(int alarmId, Context context) {
         Timber.d("UnscheduleAlarm");
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(context, AlarmListener.class);
+        Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context, alarmId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.cancel(pendingIntent);

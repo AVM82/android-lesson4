@@ -25,7 +25,7 @@ public class RestoreAlarmService extends IntentService {
         for (Alarm alarm : alarms) {
             Timber.d("I ran!");
             Timber.d("Alarm set: %s", alarm.getAlarmTime());
-            new AlarmsService(this).scheduleAlarm(alarm);
+            AlarmsManager.scheduleAlarm(alarm, this);
         }
 
     }

@@ -21,10 +21,10 @@
         </activity>
         <activity android:name=".view.dialog.AlertDialogActivity" />
 
-        <receiver android:name=".model.service.AlarmListener" />
+        <receiver android:name=".model.service.AlarmBroadcastReceiver" />
 
         <receiver
-            android:name=".model.service.RebootListener"
+            android:name=".model.service.RebootBroadcastReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

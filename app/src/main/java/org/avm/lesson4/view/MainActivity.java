@@ -1,5 +1,6 @@
 package org.avm.lesson4.view;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
@@ -34,7 +35,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mainPresenter = new MainPresenterImpl(this);
+        try {
+            mainPresenter = new MainPresenterImpl(this);
+        } catch (IllegalArgumentException e) {
+            Timber.d(e);
+        }
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         ListView listView = binding.alarmsListView;
         listView.setOnItemLongClickListener(onItemLongClickListener);
@@ -73,6 +78,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
         alarms.clear();
         alarms.addAll(mainPresenter.getAllAlarmsFromDb());
         alarmAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public Context getContext() {
+        return getBaseContext();
     }
 
     private void showBottomMenu(View view) {

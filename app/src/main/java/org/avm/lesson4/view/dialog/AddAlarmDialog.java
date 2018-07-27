@@ -17,7 +17,8 @@ import timber.log.Timber;
 
 public class AddAlarmDialog extends DialogFragment {
 
-    MainView mainView;
+    private MainView mainView;
+
     private TimePickerDialog.OnTimeSetListener callback = (timePicker, hourOfDay, minute) -> {
         if (timePicker.isShown()) {
             Calendar calendar = Calendar.getInstance();
@@ -38,6 +39,11 @@ public class AddAlarmDialog extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mainView = (MainView) context;
+        // not to catch ClassCastException
+        if (context instanceof MainView) {
+            mainView = (MainView) context;
+        } else {
+            Timber.d("Context is not MainView");
+        }
     }
 }
